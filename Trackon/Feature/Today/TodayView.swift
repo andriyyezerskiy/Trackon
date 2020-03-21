@@ -11,7 +11,7 @@ import SwiftUI
 struct TodayView: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(fetchRequest: TrackerItem.getAllTrackerItems()) var trackerItems: FetchedResults<TrackerItem>
+    @FetchRequest(fetchRequest: TrackerItem.getTodayTrackerItems()) var trackerItems: FetchedResults<TrackerItem>
         
     var today: Date = Date()
         

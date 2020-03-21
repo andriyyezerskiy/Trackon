@@ -30,4 +30,25 @@ extension TrackerItem {
         
         return request
     }
+    
+    static func getTodayTrackerItems() -> NSFetchRequest<TrackerItem> {
+        let request: NSFetchRequest<TrackerItem> = TrackerItem.fetchRequest() as! NSFetchRequest<TrackerItem>
+        let sortDescriptor: NSSortDescriptor = .init(key: "createdAt", ascending: true)
+        
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone.autoupdatingCurrent
+
+        let dateFrom = calendar.startOfDay(for: Date())
+        if let dateTo = calendar.date(byAdding: .day, value: 1, to: dateFrom) {
+            let fromPredicate = NSPredicate(format: "%@ >= %@", dateFrom as NSDate)
+            let toPredicate = NSPredicate(format: "%@ < %@", dateTo as NSDate)
+            let datePredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate])
+            
+            request.predicate = datePredicate
+        }
+
+        request.sortDescriptors = [sortDescriptor]
+        
+        return request
+    }
 }
