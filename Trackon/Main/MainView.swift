@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct MainView: View {
+    
     @State private var selection = 0
     
     var body: some View {
@@ -51,6 +52,8 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        // Declare CoreData Context to avoid live preview crashes
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        return MainView().environment(\.managedObjectContext, context)
     }
 }
